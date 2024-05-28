@@ -21,7 +21,7 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minLength: [6, 'minLength 6 characters'],
+        minLength: [6, 'Password must be at least 6 characters long'],
     },
     phone: {
         type: String,
@@ -55,14 +55,46 @@ const userSchema = mongoose.Schema({
 }, { timestamps: true 
  })
 
-userSchema.pre("save", function   ()  {
-    this.password = bcrypt.hashSync(this.password,7)
-})
+// userSchema.pre("save", function   ()  {
+//     this.password = bcrypt.hashSync(this.password,7)
+// })
 
 
-userSchema.pre("findOneAndUpdate", function () {
-  this._update.password = bcrypt.hashSync(this._update.password, 7);
+// userSchema.pre("findOneAndUpdate", function () {
+//   this._update.password = bcrypt.hashSync(this._update.password, 7);
+// });
+
+userSchema.pre('save', function(next) {
+    if (this.isModified('password')) {
+        this.password = bcrypt.hashSync(this.password, 7);
+    }
+    next();
 });
+
+userSchema.pre('findOneAndUpdate', function(next) {
+    if (this._update.password) {
+        this._update.password = bcrypt.hashSync(this._update.password, 7);
+    }
+    next();
+});
+
+// userSchema.virtual('confirmPassword')
+//     .get(function() {
+//         return this._confirmPassword;
+//     })
+//     .set(function(value) {
+//         this._confirmPassword = value;
+//     });
+
+//     userSchema.pre('save', function(next) {
+//         if (this.password !== this.confirmPassword) {
+//             const err = new Error('Passwords do not match');
+//             next(err);
+//         } else {
+//             next();
+//         }
+//     });
+
 
 
 
