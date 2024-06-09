@@ -16,7 +16,7 @@ const categorySchema = mongoose.Schema({
         lowercase: true,
         required: true
     },
-   image : String
+    image: String
 }, { timestamps: true })
 
 
