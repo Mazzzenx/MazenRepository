@@ -26,7 +26,6 @@ const userSchema = mongoose.Schema({
     phone: {
         type: String,
         required: [true, 'phone number required'],
-
     },
     profilePic: String,
     role: {

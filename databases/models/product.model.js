@@ -4,7 +4,7 @@ const productSchema = mongoose.Schema(
   {
     title: {
       type: String,
-      unique: [true, "Product title is unique"],
+      unique: [false, "Product title is unique"],
       trim: true,
       required: [true, "Product title is required"],
       minLength: [2, "too short product name"],
@@ -56,17 +56,17 @@ const productSchema = mongoose.Schema(
     category: {
       type: mongoose.Types.ObjectId,
       ref: "category",
-      required: [true, "product category required"],
+      required: [false, "product category required"],
     },
     subCategory: {
       type: mongoose.Types.ObjectId,
       ref: "subCategory",
-      required: [true, "product subcategory required"],
+      required: [false, "product subcategory required"],
     },
     brand: {
       type: mongoose.Types.ObjectId,
       ref: "brand",
-      required: [true, "product brand required"],
+      required: [false, "product brand required"],
     },
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }

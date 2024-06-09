@@ -1,4 +1,4 @@
-import {cloudinaryConfig} from "../../config/cloud"
+import {cloudinaryConfig} from "../../config/cloud.js"
 
 const uploadImageToCloudinary = async (file, publicId, path) => {
     try {

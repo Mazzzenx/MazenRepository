@@ -90,7 +90,7 @@ export const protectRoutes = catchAsyncError(async (req, res, next) => {
     console.log(token);
     if (!token) return next(new AppError("please provide token", 401))
     
-    let decoded = await jwt.verify(token, "mazen");
+    let decoded = await jwt.verify(token, "yourSecretKey");
 
 
     let user = await userModel.findById(decoded.userId)

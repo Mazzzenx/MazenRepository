@@ -8,24 +8,27 @@ import ApiFeatures from '../../utils/APIFeatures.js';
 import { uploadToCloudinar } from "../../utils/middleware/cloudinary.upload.js"
 
 const createProduct = async (req, res, next) => {
-  console.log("adasdasdasdas");
   try {
     // Upload image and image array to Cloudinary
-    const imgCoverUpload = await cloudinary.uploader.upload(req.files.imgCover[0].path, "123456", "imgCover-pic");
-    const imagesUpload = await Promise.all(
-      req.files.images.map(async (image) => await cloudinary.uploader.upload(image.path, "1235", "product-pic"))
-    );
-    
+    const imgCoverUpload = await uploadToCloudinar(req.file.path, "123456", "imgCover-pic");
+    // const imagesUpload = await Promise.all(
+    //   // req.files.images.map(async (image) => await uploadToCloudinar(image.path, "1235", "product-pic"))
+    // );
+
+      console.log("imgCoverUpload")
+
+
+      console.log(imgCoverUpload)
     // Update product data with Cloudinary URLs
     req.body.slug = slugify(req.body.title);
     req.body.imgCover = imgCoverUpload.secure_url;
-    req.body.images = imagesUpload.map((image) => image.secure_url);
+    req.body.images = imgCoverUpload.data
 
     // Create and save product
     let results = new productModel(req.body);
     let added = await results.save();
 
-    res.status(201).json({ message: "added", added });
+    res.status(201).json({ message: "added", added});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error uploading to Cloudinary" });
