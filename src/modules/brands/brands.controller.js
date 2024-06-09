@@ -5,14 +5,22 @@ import catchAsyncError from "../../utils/middleware/catchAyncError.js";
 import { brandModel } from '../../../databases/models/brand.model.js';
 import deleteOne from '../../utils/handlers/refactor.handler.js';
 import ApiFeatures from '../../utils/APIFeatures.js';
-
+import { uploadToCloudinar } from "../../utils/middleware/cloudinary.upload.js"
 
 
 
 const createBrand = catchAsyncError(async (req, res, next) => {
 
   req.body.slug = slugify(req.body.name); 
-  req.body.logo = req.file.filename;
+  // req.body.logo = req.file.filename;
+  req.body.image = req.file.filename
+  const result = await uploadToCloudinar(req.file.path, "12345", "brand-pic")
+  console.log(result);
+  if (!result.success)
+    return result
+  const url = result.data
+  console.log("success");
+  req.body.image = url 
   let results = new brandModel(req.body);
   let added = await results.save();
   res.status(201).json({ message: "added", added });

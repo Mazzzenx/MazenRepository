@@ -1,10 +1,12 @@
 import express from "express";
 import * as subCategoryController from "./subCategories.controller.js";
 const subCategoryRouter = express.Router({mergeParams: true});
+import  { upload } from '../../utils/middleware/fileUploads.js';
+
 
 subCategoryRouter.route("/")
     .get(subCategoryController.getAllSubCategories)
-    .post(subCategoryController.createSubCategory);
+    .post(upload.single("Subcatagory-pic"),subCategoryController.createSubCategory);
 
 subCategoryRouter.route("/:id")
     .get(subCategoryController.getSubCategoryById)

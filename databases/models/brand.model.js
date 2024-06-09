@@ -14,13 +14,13 @@ const brandSchema = mongoose.Schema(
       lowercase: true,
       required: true,
     },
-    logo: String,
+    image: String,
   },
   { timestamps: true }
 );
-brandSchema.post("init", (doc) => {
-  doc.logo = process.env.BASE_URL + "brand/" + doc.logo;
-}); 
+// brandSchema.post("init", (doc) => {
+//   doc.logo = process.env.BASE_URL + "brand/" + doc.logo;
+// }); 
 
 export const brandModel = mongoose.model('brand', brandSchema)
 

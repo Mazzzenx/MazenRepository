@@ -5,15 +5,14 @@ import { validation } from '../../utils/middleware/validation.js';
 import { createCategorySchema, getCategoryByIdSchema } from './categories.validator.js';
 const categoryRouter = express.Router();
 import { uploadSingleFile } from '../../utils/middleware/fileUploads.js';
+import  { upload } from '../../utils/middleware/fileUploads.js';
 
  categoryRouter.use('/:id/subCategory', subCategoryRouter)
 
 
 
-
-
 categoryRouter.route("/").get(categoryController.getAllCategories)
-  .post(uploadSingleFile('category', 'image'), validation(createCategorySchema), categoryController.createCategory);
+  .post(upload.single("catagory-pic"), validation(createCategorySchema), categoryController.createCategory);
 
 
 categoryRouter
@@ -21,14 +20,6 @@ categoryRouter
   .get(validation(getCategoryByIdSchema), categoryController.getCategoryById)
   .put(categoryController.updateCategory)
   .delete(categoryController.deleteCategory);
-
-
-
-
-
-
-
-
 
 
 

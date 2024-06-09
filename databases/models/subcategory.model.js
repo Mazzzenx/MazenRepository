@@ -19,11 +19,11 @@ const subCategorySchema = mongoose.Schema({
     },
   image: String
 }, { timestamps: true })
-subCategorySchema.post('init', (doc) => {
-    if (doc.image) {
-        doc.image = process.env.BASE_URL + "subCategory/" + doc.image;
-    }
-});
+// subCategorySchema.post('init', (doc) => {
+//     if (doc.image) {
+//         doc.image = process.env.BASE_URL + "subCategory/" + doc.image;
+//     }
+// });
 
 export const subCategoryModel = mongoose.model('subCategory', subCategorySchema)
 

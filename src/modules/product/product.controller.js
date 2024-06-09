@@ -5,23 +5,47 @@ import catchAsyncError from "../../utils/middleware/catchAyncError.js";
 import deleteOne from "../../utils/handlers/refactor.handler.js";
 import { productModel } from '../../../databases/models/product.model.js';
 import ApiFeatures from '../../utils/APIFeatures.js';
+import { uploadToCloudinar } from "../../utils/middleware/cloudinary.upload.js"
 
-
-//  catchAsyncError(
-
-const createProduct =
-  
-  async (req, res, next) => {
-    console.log("adasdasdasdas");
+const createProduct = async (req, res, next) => {
+  console.log("adasdasdasdas");
+  try {
+    // Upload image and image array to Cloudinary
+    const imgCoverUpload = await cloudinary.uploader.upload(req.files.imgCover[0].path, "123456", "imgCover-pic");
+    const imagesUpload = await Promise.all(
+      req.files.images.map(async (image) => await cloudinary.uploader.upload(image.path, "1235", "product-pic"))
+    );
+    
+    // Update product data with Cloudinary URLs
     req.body.slug = slugify(req.body.title);
-    req.body.imgCover = req.files.imgCover[0].filename;
-    req.body.images = req.files.images.map(ele => ele.filename)
+    req.body.imgCover = imgCoverUpload.secure_url;
+    req.body.images = imagesUpload.map((image) => image.secure_url);
+
+    // Create and save product
+    let results = new productModel(req.body);
+    let added = await results.save();
+
+    res.status(201).json({ message: "added", added });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error uploading to Cloudinary" });
+  }
+};
+// //  catchAsyncError(
+
+// const createProduct =
+  
+//   async (req, res, next) => {
+//     console.log("adasdasdasdas");
+//     req.body.slug = slugify(req.body.title);
+//     req.body.imgCover = req.files.imgCover[0].filename;
+//     req.body.images = req.files.images.map(ele => ele.filename)
 
   
-  let results = new productModel(req.body);
-  let added = await results.save();
-  res.status(201).json({ message: "added", added });
-  }
+//   let results = new productModel(req.body);
+//   let added = await results.save();
+//   res.status(201).json({ message: "added", added });
+//   }
 
   // );
 
