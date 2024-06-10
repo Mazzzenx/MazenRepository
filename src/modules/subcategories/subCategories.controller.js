@@ -13,7 +13,7 @@ const createSubCategory = catchAsyncError(async (req, res, next) => {
  let { name,category } = req.body;
   req.body.slug = slugify(req.body.name)
   req.body.image = req.file.filename
-  const result = await uploadToCloudinar(req.file.path, "1234", "Subcatagory-pic")
+  const result = await uploadToCloudinar(req.file.path, "Subcatagory-pic")
   console.log(result);
   if (!result.success)
     return result
