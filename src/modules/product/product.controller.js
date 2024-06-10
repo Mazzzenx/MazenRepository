@@ -10,7 +10,7 @@ import { uploadToCloudinar } from "../../utils/middleware/cloudinary.upload.js"
 const createProduct = async (req, res, next) => {
   try {
     // Upload image and image array to Cloudinary
-    const imgCoverUpload = await uploadToCloudinar(req.file.path, "123456", "imgCover-pic");
+    const imgCoverUpload = await uploadToCloudinar(req.file.path, "imgCover-pic");
     // const imagesUpload = await Promise.all(
     //   // req.files.images.map(async (image) => await uploadToCloudinar(image.path, "1235", "product-pic"))
     // );
