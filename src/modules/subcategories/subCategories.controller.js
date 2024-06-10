@@ -10,7 +10,7 @@ import { uploadToCloudinar } from "../../utils/middleware/cloudinary.upload.js"
 
 
 const createSubCategory = catchAsyncError(async (req, res, next) => {
- let { name,categoryId } = req.body;
+ let { name,category } = req.body;
   req.body.slug = slugify(req.body.name)
   req.body.image = req.file.filename
   const result = await uploadToCloudinar(req.file.path, "1234", "Subcatagory-pic")
@@ -21,7 +21,7 @@ const createSubCategory = catchAsyncError(async (req, res, next) => {
   console.log("success");
   req.body.image = url 
   // let results = new subCategoryModel(req.body);
-  let results = new subCategoryModel({ name, slug: slugify(name), category: categoryId, image:url });
+  let results = new subCategoryModel({ name, slug: slugify(name), category: category, image:url });
   let added = await results.save();
 
   res.status(201).json({ message: "added", added });
