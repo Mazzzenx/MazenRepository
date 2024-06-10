@@ -11,7 +11,7 @@ import { uploadToCloudinar } from "../../utils/middleware/cloudinary.upload.js"
 const createCategory = catchAsyncError(async (req, res, next) => {
   req.body.slug = slugify(req.body.name)
   req.body.image = req.file.filename
-  const result = await uploadToCloudinar(req.file.path, "123", "catagory-images")
+  const result = await uploadToCloudinar(req.file.path, "catagory-images")
   console.log(result);
   if (!result.success)
     return result
