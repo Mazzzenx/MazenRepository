@@ -4,7 +4,6 @@ const productSchema = mongoose.Schema(
   {
     title: {
       type: String,
-      unique: [false, "Product title is unique"],
       trim: true,
       required: [true, "Product title is required"],
       minLength: [2, "too short product name"],
