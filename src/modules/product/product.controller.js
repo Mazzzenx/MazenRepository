@@ -22,7 +22,8 @@ const createProduct = async (req, res, next) => {
     // Update product data with Cloudinary URLs
     req.body.slug = slugify(req.body.title);
     req.body.imgCover = imgCoverUpload.secure_url;
-    req.body.images = imgCoverUpload.data
+    // req.body.images = imgCoverUpload.data
+    req.body.images = imagesUpload.url
 
     // Create and save product
     let results = new productModel(req.body);
