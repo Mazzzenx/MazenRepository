@@ -11,9 +11,9 @@ const createProduct = async (req, res, next) => {
   try {
     // Upload image and image array to Cloudinary
     const imgCoverUpload = await uploadToCloudinar(req.file.path);
-    const imagesUpload = await Promise.all(
-       req.files.images.map(async (image) => await uploadToCloudinar(image.path, "product-pic"))
-    );
+    // const imagesUpload = await Promise.all(
+    //    req.files.images.map(async (image) => await uploadToCloudinar(image.path, "product-pic"))
+    // );
 
       console.log("imgCoverUpload")
 
@@ -22,8 +22,8 @@ const createProduct = async (req, res, next) => {
     // Update product data with Cloudinary URLs
     req.body.slug = slugify(req.body.title);
     req.body.imgCover = imgCoverUpload.secure_url;
-    // req.body.images = imgCoverUpload.data
-    req.body.images = imagesUpload.url
+    req.body.images = imgCoverUpload.data
+  
 
     // Create and save product
     let results = new productModel(req.body);
