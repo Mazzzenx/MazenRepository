@@ -9,9 +9,9 @@ export default class ApiFeatures {
     pagination() {
           let page = this.queryString.page * 1 || 1;
           if (this.queryString.page <= 0) page = 1;
-        let skip = (page - 1) * 4;
+        let skip = (page - 1) * 10;
         this.page = page;
-        this.mongooseQuery.skip(skip).limit(4)
+        this.mongooseQuery.skip(skip).limit(100)
         return this;
     }
 
