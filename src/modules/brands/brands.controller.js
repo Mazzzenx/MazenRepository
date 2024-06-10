@@ -14,7 +14,7 @@ const createBrand = catchAsyncError(async (req, res, next) => {
   req.body.slug = slugify(req.body.name); 
   // req.body.logo = req.file.filename;
   req.body.image = req.file.filename
-  const result = await uploadToCloudinar(req.file.path, "12345", "brand-pic")
+  const result = await uploadToCloudinar(req.file.path, "brand-pic")
   console.log(result);
   if (!result.success)
     return result
