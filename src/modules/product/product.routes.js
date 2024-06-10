@@ -11,7 +11,7 @@ productRouter
   .get(productController.getAllProduct)
   .post(
      upload.single("imgCover-pic"),
-     // upload.array('product-pic'),
+      upload.array('product-pic'),
     protectRoutes, // Apply authorization middleware
     productController.createProduct
   );
