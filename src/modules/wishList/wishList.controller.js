@@ -55,6 +55,7 @@ const getAllWishList =
   catchAsyncError(
   
   async (req, res, next) => {
+  let { product } = req.body;
 
   // let results = await userModel.findOne({ _id: req.user._id })
     let results = await userModel.findOneAndUpdate(
