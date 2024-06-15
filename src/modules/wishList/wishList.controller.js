@@ -56,7 +56,14 @@ const getAllWishList =
   
   async (req, res, next) => {
 
-  let results = await userModel.findOne({ _id: req.user._id })
+  // let results = await userModel.findOne({ _id: req.user._id })
+    let results = await userModel.findOneAndUpdate(
+    req.user._id,
+    {
+      $addToSet: { wishList: product },
+    },
+    { new: true }
+  );
   !results && next(new AppError("not found Review", 404));
   results && res.json({ message: "Done", results: results.wishList});
   }
